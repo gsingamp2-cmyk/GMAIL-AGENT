@@ -1,0 +1,260 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: "DM Sans", sans-serif;
+    color: #1c302a;
+    background: #f7f5ee;
+}
+.navbar {
+    height: 92px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #dddcd4;
+    background: #faf9f4;
+}
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.brand-mark {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #164c3e;
+    color: white;
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+}
+.brand-name {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+.brand-subtitle {
+    margin-top: 3px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: #89918b;
+}
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+.connection {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #52615a;
+}
+.connection-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #78a987;
+    box-shadow: 0 0 0 5px #e7eee8;
+}
+.compose-button {
+    color: #164c3e;
+    font-weight: 600;
+    text-decoration: none;
+}
+main {
+    min-height: calc(100vh - 170px);
+}
+.history-section {
+    width: 84%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 65px 0 80px;
+}
+.history-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 35px;
+}
+.section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #ad8b4b;
+}
+h1 {
+    margin: 8px 0 8px;
+    font-family: "Playfair Display", serif;
+    font-size: 64px;
+    font-weight: 600;
+    line-height: 1;
+}
+.history-header p {
+    margin: 0;
+    color: #6c7771;
+}
+.new-message-button {
+    padding: 13px 20px;
+    border-radius: 24px;
+    background: #164c3e;
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+.history-card {
+    background: #fffdfa;
+    border: 1px solid #deded7;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(30, 50, 43, 0.07);
+}
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 850px;
+}
+thead {
+    background: #f0f1ea;
+}
+th {
+    padding: 18px 20px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: #68736d;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+td {
+    padding: 20px;
+    border-top: 1px solid #e5e5df;
+    font-size: 14px;
+    vertical-align: top;
+}
+tbody tr:hover {
+    background: #fafaf5;
+}
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #e7f1e9;
+    color: #28613f;
+    font-size: 12px;
+    font-weight: 600;
+}
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #4c9662;
+}
+.subject {
+    font-weight: 700;
+    color: #20362f;
+}
+.recipient {
+    color: #53635c;
+    line-height: 1.6;
+}
+.message-preview {
+    max-width: 250px;
+    color: #68736d;
+    line-height: 1.5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.date {
+    color: #68736d;
+    white-space: nowrap;
+}
+.loading {
+    text-align: center;
+    padding: 50px;
+    color: #7b847f;
+}
+.empty-state {
+    display: none;
+    padding: 70px 20px;
+    text-align: center;
+}
+.empty-icon {
+    font-size: 40px;
+}
+.empty-state h2 {
+    margin: 15px 0 8px;
+    font-family: "Playfair Display", serif;
+    font-size: 32px;
+}
+.empty-state p {
+    color: #6c7771;
+}
+.empty-state a {
+    color: #164c3e;
+    font-weight: 600;
+    text-decoration: none;
+}
+footer {
+    min-height: 100px;
+    padding: 30px 7%;
+    border-top: 1px solid #dddcd4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #69736e;
+    font-size: 12px;
+}
+footer div {
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #164c3e;
+}
+@media (max-width: 700px) {
+    .navbar {
+        padding: 0 5%;
+    }
+    .connection {
+        display: none;
+    }
+    .history-section {
+        width: 92%;
+        padding-top: 40px;
+    }
+    h1 {
+        font-size: 46px;
+    }
+    .history-header {
+        align-items: flex-start;
+        gap: 25px;
+        flex-direction: column;
+    }
+    footer {
+        padding: 25px 5%;
+    }
+}
+.compose-button,.new-message-button,.empty-state button {
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
+}
+.empty-state button {
+    background: none;
+    color: #164c3e;
+    font-weight: 600;
+    font-size: 14px;
+}

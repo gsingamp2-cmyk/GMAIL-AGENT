@@ -8,7 +8,6 @@ require("dotenv").config({
 const mailRoutes = require("./routes/mailRoutes");
 
 const app = express();
-
 const PORT = process.env.PORT || 5001;
 
 app.use(cors());
@@ -20,7 +19,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use("/", mailRoutes);
+app.use("/mail", mailRoutes);
 
 app.listen(PORT, () => {
   console.log(`Mail Service running on http://localhost:${PORT}`);

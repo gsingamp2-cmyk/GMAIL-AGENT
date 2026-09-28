@@ -1,0 +1,49 @@
+[
+  {
+    "id": "1790613469476-drp628",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "sent",
+        "messageId": null
+      }
+    ],
+    "subject": "final check",
+    "message": "this is the last mail i want to send if everything goes right",
+    "status": "sent",
+    "sentAt": "2026-09-28T16:37:49.476Z"
+  },
+  {
+    "id": "1790612125470-9jndpd",
+    "recipients": [
+      {
+        "email": "gsingamp2@gitam.in",
+        "status": "sent",
+        "messageId": null
+      },
+      {
+        "email": "gsingamp2@gmail.com",
+        "status": "sent",
+        "messageId": null
+      }
+    ],
+    "subject": "My-Agent Multiple Test",
+    "message": "This is a separate email sent by My-Agent.",
+    "status": "sent",
+    "sentAt": "2026-09-28T16:15:25.470Z"
+  },
+  {
+    "id": "1790611433062-3t6peh",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "sent",
+        "messageId": null
+      }
+    ],
+    "subject": "Testing my agent",
+    "message": "hiiiiiiiiiiiiiiiii",
+    "status": "sent",
+    "sentAt": "2026-09-28T16:03:53.062Z"
+  }
+]

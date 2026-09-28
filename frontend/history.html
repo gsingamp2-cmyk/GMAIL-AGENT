@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My-Agent — Sent History</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="history.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="brand">
+            <div class="brand-mark">M</div>
+            <div>
+                <div class="brand-name">MY-AGENT</div>
+                <div class="brand-subtitle">AI WORKSPACE</div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <div class="connection">
+                <span class="connection-dot"></span>
+                <span>Gmail connected</span>
+            </div>
+            <a href="http://127.0.0.1:5500/frontend/%20index.html" class="compose-link">Compose</a>
+        </div>
+    </header>
+    <main>
+        <section class="history-section">
+            <div class="history-header">
+                <div>
+                    <span class="section-label">MAIL STUDIO</span>
+                    <h1>Sent history</h1>
+                    <p>View the messages sent through My-Agent.</p>
+                </div>
+                <a href="http://127.0.0.1:5500/frontend/%20index.html" class="new-message-button">+ New Message</a>
+            </div>
+            <div id="historyCount">Loading...</div>
+            <div class="history-table-wrapper">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>STATUS</th>
+                            <th>SUBJECT</th>
+                            <th>RECIPIENTS</th>
+                            <th>MESSAGE</th>
+                            <th>SENT AT</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyBody">
+                        <tr>
+                            <td colspan="5">Loading history...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div>MY-AGENT</div>
+        <span>Intelligent tools for everyday work.</span>
+    </footer>
+    <script src="history.js"></script>
+</body>
+</html>
