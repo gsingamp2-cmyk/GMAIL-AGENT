@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My-Agent — Mail Studio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <div class="brand">
+            <div class="brand-mark">M</div>
+
+            <div>
+                <div class="brand-name">MY-AGENT</div>
+                <div class="brand-subtitle">AI WORKSPACE</div>
+            </div>
+        </div>
+
+        <div class="nav-right">
+
+            <div class="connection">
+                <span class="connection-dot"></span>
+                <span>Gmail connected</span>
+            </div>
+
+            <a
+                href="http://localhost:5001/auth/google"
+                class="account-button"
+            >
+                Connect account
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- HERO -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="eyebrow">
+                    <span></span>
+                    MAIL AUTOMATION
+                </div>
+
+                <h1>
+                    Send beautifully.<br>
+                    <em>Move effortlessly.</em>
+                </h1>
+
+                <p>
+                    A calm, intelligent workspace for composing
+                    and sending thoughtful emails to everyone who matters.
+                </p>
+
+                <div class="hero-actions">
+                    <button
+                        class="primary-button"
+                        onclick="focusComposer()"
+                    >
+                        Compose message
+                        <span>↗</span>
+                    </button>
+
+                    <div class="trust-note">
+                        <span>✦</span>
+                        Powered by Gmail API
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="hero-art">
+
+                <div class="floating-card card-main">
+
+                    <div class="mail-top">
+                        <span>NEW MESSAGE</span>
+                        <span class="small-dot"></span>
+                    </div>
+
+                    <div class="mail-line large"></div>
+                    <div class="mail-line"></div>
+                    <div class="mail-line short"></div>
+
+                    <div class="mail-preview">
+                        <span class="avatar">M</span>
+
+                        <div>
+                            <strong>Ready when you are.</strong>
+                            <small>Compose something meaningful.</small>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="floating-card card-small">
+
+                    <div class="mini-icon">✓</div>
+
+                    <div>
+                        <strong>Gmail connected</strong>
+                        <small>Ready to send</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- COMPOSER -->
+
+        <section class="workspace" id="composer">
+
+            <div class="workspace-heading">
+
+                <div>
+                    <span class="section-label">MAIL STUDIO</span>
+
+                    <h2>
+                        Compose your message
+                    </h2>
+
+                    <p>
+                        One message. Multiple recipients. Sent individually.
+                    </p>
+                </div>
+
+                <div class="live-status">
+                    <span></span>
+                    LIVE
+                </div>
+
+            </div>
+
+
+            <div class="composer-card">
+
+                <!-- RECIPIENTS -->
+
+                <div class="field-group">
+
+                    <label>
+                        RECIPIENTS
+                        <span id="recipientCount">0 recipients</span>
+                    </label>
+
+                    <div class="recipient-box" id="recipientBox">
+
+                        <div id="recipientChips"></div>
+
+                        <input
+                            type="email"
+                            id="recipientInput"
+                            placeholder="Enter email address and press Enter"
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+                    <div class="field-hint">
+                        Press <kbd>Enter</kbd> to add a recipient.
+                        Each person receives a separate email.
+                    </div>
+
+                </div>
+
+
+                <!-- SUBJECT -->
+
+                <div class="field-group">
+
+                    <label for="subject">
+                        SUBJECT
+                    </label>
+
+                    <input
+                        id="subject"
+                        type="text"
+                        placeholder="What would you like to say?"
+                    >
+
+                </div>
+
+
+                <!-- MESSAGE -->
+
+                <div class="field-group">
+
+                    <div class="message-label">
+
+                        <label for="message">
+                            MESSAGE
+                        </label>
+
+                        <span id="characterCount">
+                            0 characters
+                        </span>
+
+                    </div>
+
+                    <textarea
+                        id="message"
+                        placeholder="Write your message here..."
+                    ></textarea>
+
+                </div>
+
+
+                <!-- ACTION -->
+
+                <div class="composer-footer">
+
+                    <div class="sending-note">
+                        <span>✦</span>
+                        Securely delivered through your Gmail account
+                    </div>
+
+                    <button
+                        id="sendButton"
+                        class="send-button"
+                        onclick="sendEmails()"
+                    >
+                        <span id="sendText">Send message</span>
+                        <span class="send-arrow">↗</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FEATURES -->
+
+        <section class="features">
+
+            <div class="feature">
+
+                <div class="feature-number">01</div>
+
+                <div>
+                    <h3>Personal</h3>
+                    <p>
+                        Every recipient receives their own individual email.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-number">02</div>
+
+                <div>
+                    <h3>Simple</h3>
+                    <p>
+                        Add everyone once and let My-Agent handle the delivery.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-number">03</div>
+
+                <div>
+                    <h3>Secure</h3>
+                    <p>
+                        Your messages are delivered through Google's Gmail API.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SUCCESS -->
+
+        <div id="toast" class="toast">
+
+            <div class="toast-icon">✓</div>
+
+            <div>
+                <strong id="toastTitle">Message sent</strong>
+                <span id="toastMessage">
+                    Your email was delivered successfully.
+                </span>
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        <div>MY-AGENT</div>
+
+        <span>
+            Intelligent tools for everyday work.
+        </span>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
