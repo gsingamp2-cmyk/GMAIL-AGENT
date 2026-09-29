@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My-Agent | AI Email Assistant</title>
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        <div class="logo-circle">M</div>
+
+        <div>
+            <h2>MY-AGENT</h2>
+            <span>AI WORKSPACE</span>
+        </div>
+    </div>
+
+    <nav>
+        <a href="%20index.html">Compose</a>
+        <a href="history.html">History</a>
+        <a href="chatbot.html" class="active">AI Agent</a>
+    </nav>
+
+</header>
+
+
+<main class="agent-page">
+
+    <div class="agent-header">
+
+        <span>AI EMAIL ASSISTANT</span>
+
+        <h1>Work with your email.</h1>
+
+        <p>
+            Tell My-Agent what you want to send.
+            Review the draft before it goes out.
+        </p>
+
+    </div>
+
+
+    <div class="agent-workspace">
+
+
+        <!-- CHAT HISTORY SIDEBAR -->
+
+        <aside class="chat-history-panel">
+
+            <div class="history-header">
+
+                <div>
+                    <span>CONVERSATIONS</span>
+                    <h2>Chat history</h2>
+                </div>
+
+                <button
+                    id="newChatButton"
+                    class="new-chat-button"
+                >
+                    + New
+                </button>
+
+            </div>
+
+
+            <div
+                id="chatHistoryList"
+                class="chat-history-list"
+            ></div>
+
+        </aside>
+
+
+        <!-- EMAIL DRAFT -->
+
+        <section class="draft-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span>EMAIL DRAFT</span>
+
+                    <h2>Your message</h2>
+
+                </div>
+
+                <div
+                    id="draftStatus"
+                    class="draft-status"
+                >
+                    EMPTY
+                </div>
+
+            </div>
+
+
+            <div class="draft-content">
+
+                <label>TO</label>
+
+                <input
+                    type="text"
+                    id="draftTo"
+                    placeholder="Recipient email address"
+                >
+
+
+                <label>SUBJECT</label>
+
+                <input
+                    type="text"
+                    id="draftSubject"
+                    placeholder="Email subject"
+                >
+
+
+                <label>MESSAGE</label>
+
+                <textarea
+                    id="draftMessage"
+                    placeholder="Your email will appear here..."
+                ></textarea>
+
+            </div>
+
+
+            <div class="draft-footer">
+
+                <span id="draftInfo">
+                    Ask the AI to create an email.
+                </span>
+
+                <button
+                    id="sendEmailButton"
+                    onclick="sendEmail()"
+                    disabled
+                >
+                    Send Email ↗
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- CHAT -->
+
+        <section class="chat-panel">
+
+
+            <div class="chat-panel-header">
+
+                <div class="agent-title">
+
+                    <div class="agent-avatar">
+                        M
+                    </div>
+
+                    <div>
+
+                        <strong>My-Agent</strong>
+
+                        <span>
+                            AI Email Assistant
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="online-status">
+
+                    <span></span>
+
+                    ONLINE
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="messages"
+                id="messages"
+            >
+
+                <div class="message bot">
+
+                    <div class="avatar">
+                        M
+                    </div>
+
+                    <div class="bubble">
+                        Hi! 👋 Tell me what email you want to send and I'll prepare the draft for you.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="suggestions">
+
+                <button
+                    onclick="sendSuggestion('Write a professional email to my professor')"
+                >
+                    Email my professor
+                </button>
+
+                <button
+                    onclick="sendSuggestion('Write a thank you email')"
+                >
+                    Thank someone
+                </button>
+
+                <button
+                    onclick="sendSuggestion('What can you do?')"
+                >
+                    What can you do?
+                </button>
+
+            </div>
+
+
+            <div class="chat-input">
+
+                <input
+                    type="text"
+                    id="messageInput"
+                    placeholder="Tell me what you want to send..."
+                    onkeydown="handleKey(event)"
+                >
+
+                <button
+                    id="sendButton"
+                    onclick="sendMessage()"
+                >
+                    ↗
+                </button>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<script src="chatbot.js"></script>
+
+</body>
+</html>

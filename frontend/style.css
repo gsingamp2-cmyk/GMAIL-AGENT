@@ -1272,3 +1272,23 @@ footer div {
         gap: 10px;
     }
 }
+
+.chatbot-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 12px;
+    padding: 15px 24px;
+    border-radius: 30px;
+    background: #ffffff;
+    color: #123f35;
+    border: 1px solid #d8d6ce;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.chatbot-button:hover {
+    background: #f1f0ea;
+}

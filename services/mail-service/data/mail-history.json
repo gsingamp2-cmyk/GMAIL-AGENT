@@ -1,5 +1,75 @@
 [
   {
+    "id": "1790661479641-3qwx3v",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "sent",
+        "messageId": null
+      }
+    ],
+    "subject": "Request for Interview Feedback - TCS",
+    "message": "Dear Hiring Team,\n\nI hope this email finds you well.\n\nI am writing to follow up on my recent interview with TCS for the position. I would be very grateful if you could provide some feedback on my performance, as it would greatly help me in my professional development.\n\nThank you for your time and consideration.\n\nBest regards,\nGovardhan\nComputer Science and Business Systems",
+    "status": "sent",
+    "sentAt": "2026-09-29T05:57:59.641Z"
+  },
+  {
+    "id": "1790661425127-9u8eay",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "sent",
+        "messageId": null
+      }
+    ],
+    "subject": "Apology for Late Project Submission",
+    "message": "Dear Team Lead,\n\nI am writing to sincerely apologize for the delay in submitting the recent project. Despite my best efforts, I encountered unexpected challenges that caused me to miss the deadline.\n\nI have now completed the work and ensured its quality. I understand the importance of timely delivery and assure you that I will take proactive measures to prevent such delays in the future.\n\nThank you for your understanding and patience.\n\nBest regards,\nGovardhan\nComputer Science and Business Systems",
+    "status": "sent",
+    "sentAt": "2026-09-29T05:57:05.127Z"
+  },
+  {
+    "id": "1790660866613-3l7qyd",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "sent",
+        "messageId": null
+      }
+    ],
+    "subject": "Request to Postpone Project Review due to Illness",
+    "message": "Dear Professor Vardhansingampalli,\n\nI am writing to inform you that I am currently unwell and will not be able to attend the upcoming project review. Could you please kindly consider postponing it for 3 days?\n\nThank you for your understanding.\n\nBest regards,\nGovardhan\nComputer Science and Business Systems",
+    "status": "sent",
+    "sentAt": "2026-09-29T05:47:46.613Z"
+  },
+  {
+    "id": "1790659941259-1y6az8",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "sent",
+        "messageId": null
+      }
+    ],
+    "subject": "Thank you for attending my workshop",
+    "message": "Dear Professor,\n\nI wanted to sincerely thank you for taking the time to attend my workshop. Your presence and support mean a lot to me, and I hope you found the session informative and engaging.\n\nBest regards,\nGovardhan\nComputer Science and Business Systems",
+    "status": "sent",
+    "sentAt": "2026-09-29T05:32:21.259Z"
+  },
+  {
+    "id": "1790657330004-h0e3ns",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "sent",
+        "messageId": null
+      }
+    ],
+    "subject": "Testing my agent",
+    "message": ",",
+    "status": "sent",
+    "sentAt": "2026-09-29T04:48:50.004Z"
+  },
+  {
     "id": "1790613469476-drp628",
     "recipients": [
       {
