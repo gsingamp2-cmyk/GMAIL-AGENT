@@ -8,24 +8,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="history.css">
+    <link rel="stylesheet" href="./components/navbar.css">
 </head>
 <body>
-    <header class="navbar">
-        <div class="brand">
-            <div class="brand-mark">M</div>
-            <div>
-                <div class="brand-name">MY-AGENT</div>
-                <div class="brand-subtitle">AI WORKSPACE</div>
-            </div>
-        </div>
-        <div class="nav-right">
-            <div class="connection">
-                <span class="connection-dot"></span>
-                <span>Gmail connected</span>
-            </div>
-            <a href="http://127.0.0.1:5500/frontend/%20index.html" class="compose-link">Compose</a>
-        </div>
-    </header>
+    <div id="navbar"></div>
     <main>
         <section class="history-section">
             <div class="history-header">
@@ -62,5 +48,6 @@
         <span>Intelligent tools for everyday work.</span>
     </footer>
     <script src="history.js"></script>
+    <script src="./components/navbar.js"></script>
 </body>
 </html>

@@ -8,29 +8,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./components/navbar.css">
 </head>
 <body>
     <div class="background-glow glow-one"></div>
     <div class="background-glow glow-two"></div>
-    <header class="navbar">
-        <div class="brand">
-            <div class="brand-mark">M</div>
-            <div>
-                <div class="brand-name">MY-AGENT</div>
-                <div class="brand-subtitle">AI WORKSPACE</div>
-            </div>
-        </div>
-        <div class="nav-right">
-            <div class="connection">
-                <span class="connection-dot"></span>
-                <span>Gmail connected</span>
-            </div>
-            <a href="./history.html" class="account-button">History</a>
-            <a href="chatbot.html" class="chatbot-button">
-                    Chat with My-Agent ↗
-            </a>
-        </div>
-    </header>
+    <div id="navbar"></div>
     <main>
         <section class="hero">
             <div class="hero-content">
@@ -121,5 +104,6 @@
         <span>Intelligent tools for everyday work.</span>
     </footer>
     <script src="script.js"></script>
+    <script src="./components/navbar.js"></script>
 </body>
 </html>
