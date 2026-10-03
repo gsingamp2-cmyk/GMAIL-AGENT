@@ -1,5 +1,19 @@
 [
   {
+    "id": "1791046905632-qjcq0e",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "sent",
+        "messageId": "1a102b7e7d3a286a"
+      }
+    ],
+    "subject": "Scheduler Test",
+    "message": "This email was sent automatically by My-Agent.",
+    "status": "sent",
+    "sentAt": "2026-10-03T17:02:49.551Z"
+  },
+  {
     "id": "1790661479641-3qwx3v",
     "recipients": [
       {
