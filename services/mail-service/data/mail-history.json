@@ -1,5 +1,33 @@
 [
   {
+    "id": "1791048703276-yyv81w",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "sent",
+        "messageId": "1a102d428bc0241f"
+      }
+    ],
+    "subject": "Request for One Day Assignment Extension",
+    "message": "Dear Professor,\n\nI am writing to request a one-day extension for my upcoming assignment. I need a little extra time to ensure the quality of my work.\n\nThank you for your understanding and consideration.\n\nBest regards,\nGovardhan\nComputer Science and Business Systems",
+    "status": "sent",
+    "sentAt": "2026-10-03T17:33:41.265Z"
+  },
+  {
+    "id": "1791047737944-4ei38u",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "sent",
+        "messageId": null
+      }
+    ],
+    "subject": "Request for One Day Extension on Assignment",
+    "message": "Dear Professor,\n\nI am writing to request a one-day extension for my upcoming assignment. I need a little extra time to ensure the quality of my work.\n\nThank you for your understanding.\n\nBest regards,\nGovardhan\nComputer Science and Business Systems",
+    "status": "sent",
+    "sentAt": "2026-10-03T17:15:37.944Z"
+  },
+  {
     "id": "1791046905632-qjcq0e",
     "recipients": [
       {
