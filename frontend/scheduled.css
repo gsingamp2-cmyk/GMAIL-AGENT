@@ -1,0 +1,252 @@
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:"DM Sans",sans-serif;
+    background:#f7f5ed;
+    color:#123f35;
+}
+
+main{
+    min-height:calc(100vh - 160px);
+}
+
+.scheduled-section{
+    width:1100px;
+    max-width:90%;
+    margin:70px auto;
+}
+
+.scheduled-header{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:30px;
+    margin-bottom:35px;
+}
+
+.section-label{
+    font-size:11px;
+    letter-spacing:3px;
+    color:#b28a43;
+    font-weight:600;
+}
+
+.scheduled-header h1{
+    margin:12px 0 8px;
+    font-family:"Playfair Display",Georgia,serif;
+    font-size:58px;
+    font-weight:600;
+    color:#123f35;
+}
+
+.scheduled-header p{
+    margin:0;
+    color:#777;
+    font-size:15px;
+}
+
+.new-message-button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:14px 22px;
+    border-radius:30px;
+    background:#123f35;
+    color:white;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:600;
+    white-space:nowrap;
+    transition:.2s ease;
+}
+
+.new-message-button:hover{
+    transform:translateY(-2px);
+    background:#0d3029;
+}
+
+.scheduled-summary{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.summary-card{
+    background:white;
+    border:1px solid #e2e0d7;
+    border-radius:18px;
+    padding:22px 24px;
+    box-shadow:0 10px 30px rgba(0,0,0,.04);
+}
+
+.summary-card span{
+    display:block;
+    margin-bottom:10px;
+    font-size:10px;
+    letter-spacing:2px;
+    color:#888;
+    font-weight:600;
+}
+
+.summary-card strong{
+    display:block;
+    color:#123f35;
+    font-size:25px;
+    font-weight:600;
+}
+
+#nextScheduled{
+    font-size:17px;
+}
+
+.scheduled-table-wrapper{
+    background:white;
+    border:1px solid #e2e0d7;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(0,0,0,.04);
+}
+
+.scheduled-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.scheduled-table thead{
+    background:#f0f0e9;
+}
+
+.scheduled-table th{
+    padding:17px 18px;
+    text-align:left;
+    font-size:10px;
+    letter-spacing:2px;
+    color:#6f756f;
+    font-weight:700;
+}
+
+.scheduled-table td{
+    padding:20px 18px;
+    border-top:1px solid #ebe9e1;
+    font-size:13px;
+    color:#333;
+    vertical-align:middle;
+}
+
+.scheduled-table tbody tr:hover{
+    background:#faf9f4;
+}
+
+.scheduled-table td[colspan]{
+    padding:45px 20px;
+    text-align:center;
+    color:#888;
+}
+
+.status{
+    display:inline-flex;
+    align-items:center;
+    padding:6px 11px;
+    border-radius:20px;
+    font-size:9px;
+    letter-spacing:1px;
+    font-weight:700;
+}
+
+.status.scheduled{
+    background:#e7f1ec;
+    color:#17604d;
+}
+
+.status.sending{
+    background:#f5ecd9;
+    color:#9a6c25;
+}
+
+.status.failed{
+    background:#f5e4e1;
+    color:#a34b40;
+}
+
+.status.sent{
+    background:#e7f1ec;
+    color:#17604d;
+}
+
+.cancel-button{
+    border:1px solid #d8d5cc;
+    background:white;
+    color:#123f35;
+    padding:8px 13px;
+    border-radius:10px;
+    cursor:pointer;
+    font-family:"DM Sans",sans-serif;
+    font-size:11px;
+    transition:.2s ease;
+}
+
+.cancel-button:hover{
+    background:#123f35;
+    color:white;
+}
+
+footer{
+    border-top:1px solid #e1dfd6;
+    min-height:90px;
+    padding:25px 7%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    color:#123f35;
+}
+
+footer div{
+    font-size:12px;
+    letter-spacing:2px;
+    font-weight:700;
+}
+
+footer span{
+    font-size:12px;
+    color:#777;
+}
+
+@media(max-width:800px){
+
+    .scheduled-section{
+        max-width:94%;
+        margin:45px auto;
+    }
+
+    .scheduled-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .scheduled-header h1{
+        font-size:42px;
+    }
+
+    .scheduled-summary{
+        grid-template-columns:1fr;
+    }
+
+    .scheduled-table-wrapper{
+        overflow-x:auto;
+    }
+
+    .scheduled-table{
+        min-width:800px;
+    }
+
+    footer{
+        padding:25px 20px;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+}

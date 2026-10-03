@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My-Agent — Scheduled Emails</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="scheduled.css">
+    <link rel="stylesheet" href="./components/navbar.css">
+</head>
+
+<body>
+
+    <!-- Reusable Navbar -->
+    <div id="navbar"></div>
+
+
+    <main>
+
+        <section class="scheduled-section">
+
+            <div class="scheduled-header">
+
+                <div>
+                    <span class="section-label">MAIL STUDIO</span>
+
+                    <h1>Scheduled emails</h1>
+
+                    <p>
+                        View and manage emails that are waiting to be sent.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="scheduled-summary">
+
+                <div class="summary-card">
+                    <span>UPCOMING</span>
+                    <strong id="scheduledCount">0</strong>
+                </div>
+
+                <div class="summary-card">
+                    <span>NEXT EMAIL</span>
+                    <strong id="nextScheduled">No scheduled emails</strong>
+                </div>
+
+            </div>
+
+
+            <div class="scheduled-table-wrapper">
+
+                <table class="scheduled-table">
+
+                    <thead>
+                        <tr>
+                            <th>STATUS</th>
+                            <th>RECIPIENT</th>
+                            <th>SUBJECT</th>
+                            <th>SCHEDULED FOR</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody id="scheduledBody">
+
+                        <tr>
+                            <td colspan="5">
+                                Loading scheduled emails...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <div>MY-AGENT</div>
+
+        <span>
+            Intelligent tools for everyday work.
+        </span>
+
+    </footer>
+
+
+    <script src="scheduled.js"></script>
+
+    <script src="./components/navbar.js"></script>
+
+</body>
+</html>
