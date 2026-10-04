@@ -14,6 +14,7 @@ const newChatButton=document.getElementById("newChatButton");
 
 const CHAT_STORAGE_KEY="myAgentConversations";
 const OLD_CHAT_STORAGE_KEY="myAgentChatHistory";
+const API_URL="http://localhost:5001";
 
 let conversations=[];
 let currentChatId=null;
@@ -21,15 +22,9 @@ let conversation=[];
 let currentDraft=null;
 let currentScheduledAt=null;
 
-
-/* CREATE CHAT ID */
-
 function createChatId(){
     return Date.now().toString()+"-"+Math.random().toString(36).substring(2,8);
 }
-
-
-/* CREATE CHAT TITLE */
 
 function createChatTitle(){
     const firstUserMessage=conversation.find(message=>message.role==="user");
@@ -43,22 +38,13 @@ function createChatTitle(){
     return title;
 }
 
-
-/* SAVE ALL CONVERSATIONS */
-
 function saveAllConversations(){
     localStorage.setItem(CHAT_STORAGE_KEY,JSON.stringify(conversations));
 }
 
-
-/* GET CURRENT CHAT */
-
 function getCurrentChat(){
     return conversations.find(chat=>chat.id===currentChatId);
 }
-
-
-/* SAVE CURRENT CHAT */
 
 function saveCurrentChat(){
     if(!currentChatId)return;
@@ -76,9 +62,6 @@ function saveCurrentChat(){
     saveAllConversations();
     renderChatHistory();
 }
-
-
-/* CREATE NEW CHAT */
 
 function createNewChat(){
     const newChat={
@@ -101,9 +84,6 @@ function createNewChat(){
     clearChatScreen();
     renderChatHistory();
 }
-
-
-/* LOAD CHAT HISTORY */
 
 function loadAllConversations(){
     const saved=localStorage.getItem(CHAT_STORAGE_KEY);
@@ -150,9 +130,6 @@ function loadAllConversations(){
     }
 }
 
-
-/* OPEN CHAT */
-
 function openChat(chatId){
     const chat=conversations.find(item=>item.id===chatId);
 
@@ -178,9 +155,6 @@ function openChat(chatId){
     renderChatHistory();
 }
 
-
-/* CLEAR CHAT SCREEN */
-
 function clearChatScreen(){
     messagesElement.innerHTML="";
     addMessage("Hi! 👋 Tell me what email you want to send and I'll prepare the draft for you.","bot");
@@ -188,9 +162,6 @@ function clearChatScreen(){
     currentScheduledAt=null;
     updateScheduleUI();
 }
-
-
-/* RENDER CHAT HISTORY */
 
 function renderChatHistory(){
     chatHistoryList.innerHTML="";
@@ -223,9 +194,6 @@ function renderChatHistory(){
     });
 }
 
-
-/* FORMAT CHAT DATE */
-
 function formatChatDate(dateString){
     if(!dateString)return "";
 
@@ -236,9 +204,6 @@ function formatChatDate(dateString){
         month:"short"
     });
 }
-
-
-/* ADD MESSAGE */
 
 function addMessage(text,type){
     const message=document.createElement("div");
@@ -267,17 +232,11 @@ function addMessage(text,type){
     messagesElement.scrollTop=messagesElement.scrollHeight;
 }
 
-
-/* LOADING */
-
 function setLoading(loading){
     sendButton.disabled=loading;
     input.disabled=loading;
     sendButton.textContent=loading?"...":"↗";
 }
-
-
-/* UPDATE DRAFT */
 
 function updateDraft(draft,shouldSave=true){
     currentDraft=draft;
@@ -324,9 +283,6 @@ function updateDraft(draft,shouldSave=true){
     if(shouldSave)saveCurrentChat();
 }
 
-
-/* UPDATE SCHEDULE UI */
-
 function updateScheduleUI(){
     if(currentScheduledAt){
         sendEmailButton.textContent="Schedule Email ↗";
@@ -334,9 +290,6 @@ function updateScheduleUI(){
         sendEmailButton.textContent="Send Email ↗";
     }
 }
-
-
-/* GET CURRENT DRAFT */
 
 function getCurrentDraft(){
     const recipients=draftTo.value.split(",").map(email=>email.trim()).filter(email=>email);
@@ -348,8 +301,57 @@ function getCurrentDraft(){
     };
 }
 
+async function cancelScheduledMail(scheduledAt,cancelTo=[]){
+    const response=await fetch(`${API_URL}/mail/scheduled`);
+    const data=await response.json();
 
-/* SEND CHAT MESSAGE */
+    if(!response.ok||!data.success){
+        throw new Error(data.error||"Could not load scheduled emails.");
+    }
+
+    const targetTime=new Date(scheduledAt).getTime();
+
+    let matches=data.scheduledMails.filter(mail=>{
+        return Math.abs(
+            new Date(mail.scheduledAt).getTime()-targetTime
+        )<1000;
+    });
+
+    if(cancelTo.length>0){
+        matches=matches.filter(mail=>{
+            return cancelTo.some(email=>{
+                return mail.to.some(recipient=>{
+                    return recipient.toLowerCase()===email.toLowerCase();
+                });
+            });
+        });
+    }
+
+    if(matches.length===0){
+        throw new Error("I could not find a matching scheduled email.");
+    }
+
+    if(matches.length>1){
+        throw new Error("Multiple scheduled emails match that date and time.");
+    }
+
+    const mail=matches[0];
+
+    const deleteResponse=await fetch(
+        `${API_URL}/mail/scheduled/${mail.id}`,
+        {
+            method:"DELETE"
+        }
+    );
+
+    const deleteData=await deleteResponse.json();
+
+    if(!deleteResponse.ok||!deleteData.success){
+        throw new Error(deleteData.error||"Could not cancel the scheduled email.");
+    }
+
+    return mail;
+}
 
 async function sendMessage(){
     const text=input.value.trim();
@@ -371,7 +373,7 @@ async function sendMessage(){
     setLoading(true);
 
     try{
-        const response=await fetch("http://localhost:5001/ai/chat",{
+        const response=await fetch(`${API_URL}/ai/chat`,{
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify({
@@ -392,6 +394,41 @@ async function sendMessage(){
             role:"assistant",
             content:data.reply
         });
+
+        if(data.type==="cancel"){
+            try{
+                const cancelledMail=await cancelScheduledMail(
+                    data.scheduledAt,
+                    data.cancelTo||[]
+                );
+
+                const cancelMessage=`I have cancelled the scheduled email to ${cancelledMail.to.join(", ")}.`;
+
+                addMessage(cancelMessage,"bot");
+
+                conversation.push({
+                    role:"assistant",
+                    content:cancelMessage
+                });
+
+                saveCurrentChat();
+            }catch(error){
+                console.error("Cancellation error:",error);
+
+                const errorMessage=`I couldn't cancel the scheduled email: ${error.message}`;
+
+                addMessage(errorMessage,"bot");
+
+                conversation.push({
+                    role:"assistant",
+                    content:errorMessage
+                });
+
+                saveCurrentChat();
+            }
+
+            return;
+        }
 
         if(data.draft){
             updateDraft(data.draft,false);
@@ -418,9 +455,6 @@ async function sendMessage(){
     }
 }
 
-
-/* SEND OR SCHEDULE EMAIL */
-
 async function sendEmail(){
     const draft=getCurrentDraft();
 
@@ -441,8 +475,8 @@ async function sendEmail(){
 
     try{
         const endpoint=isScheduled
-            ?"http://localhost:5001/mail/schedule"
-            :"http://localhost:5001/mail/send";
+            ?`${API_URL}/mail/schedule`
+            :`${API_URL}/mail/send`;
 
         const body={
             to:draft.to,
@@ -501,16 +535,10 @@ async function sendEmail(){
     }
 }
 
-
-/* SUGGESTION */
-
 function sendSuggestion(text){
     input.value=text;
     sendMessage();
 }
-
-
-/* ENTER KEY */
 
 function handleKey(event){
     if(event.key==="Enter"){
@@ -518,9 +546,6 @@ function handleKey(event){
         sendMessage();
     }
 }
-
-
-/* DRAFT FIELD CHANGES */
 
 function handleDraftChange(){
     currentDraft=getCurrentDraft();
@@ -542,7 +567,6 @@ function handleDraftChange(){
 
     saveCurrentChat();
 }
-
 
 draftTo.addEventListener("input",handleDraftChange);
 draftSubject.addEventListener("input",handleDraftChange);

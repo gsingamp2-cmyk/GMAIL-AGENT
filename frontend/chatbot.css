@@ -99,6 +99,7 @@ nav a.active{
     display:grid;
     grid-template-columns:230px 1.05fr .85fr;
     gap:18px;
+    height:650px;
     min-height:650px;
 }
 
@@ -217,6 +218,7 @@ nav a.active{
     border-radius:25px;
     box-shadow:0 15px 40px rgba(0,0,0,.05);
     overflow:hidden;
+    min-height:0;
 }
 
 .panel-header{
@@ -328,6 +330,7 @@ nav a.active{
 .chat-panel{
     display:flex;
     flex-direction:column;
+    min-height:0;
 }
 
 .chat-panel-header{
@@ -387,7 +390,7 @@ nav a.active{
 
 .messages{
     flex:1;
-    height:450px;
+    min-height:0;
     padding:22px;
     overflow-y:auto;
 }
