@@ -131,19 +131,71 @@ SCHEDULING RULES:
 
 CANCELLATION RULES:
 - If the user asks to cancel, delete, remove, stop, or unschedule a previously scheduled email, set type to "cancel".
-- Do NOT simply say that the email was cancelled.
-- Identify the date and time of the scheduled email the user wants to cancel.
-- Convert the cancellation date into YYYY-MM-DD.
-- Convert the cancellation time into HH:mm.
-- If the user mentions a recipient email, return it in cancelTo.
-- If the user says "tomorrow at 9 AM", calculate tomorrow using the CURRENT DATE above.
-- If the user does not provide enough information to identify the scheduled email, ask a question and keep scheduledAt null.
+- Cancellation can target one email or multiple emails.
+- Identify whatever filters the user provides.
+- The available cancellation filters are:
+  1. scheduledDate
+  2. scheduledTime
+  3. cancelTo
+- If the user gives a date but no time, return the date and set scheduledTime to null. This means all scheduled emails on that date may be cancelled.
+- If the user gives a date and time, return both scheduledDate and scheduledTime. This means emails matching that date and time may be cancelled.
+- If the user gives a recipient, return that email in cancelTo.
+- If the user says "cancel all scheduled emails", set type to "cancel" and leave scheduledDate, scheduledTime and cancelTo empty.
+- If the user says "cancel all emails tomorrow", return tomorrow's date and leave scheduledTime empty.
+- If the user says "cancel all emails tomorrow at 9 AM", return tomorrow's date and "09:00".
+- If the user says "cancel all emails scheduled for October 10", return "2026-10-10" and leave scheduledTime empty.
+- If the user does not provide enough information to identify what should be cancelled, ask a question.
+- Do NOT claim that the emails have already been cancelled.
 - The application will perform the actual cancellation.
 
 CANCELLATION EXAMPLES:
-- "Cancel the mail that needs to be sent tomorrow 9 AM" means type "cancel", scheduledDate should be tomorrow's date and scheduledTime should be "09:00".
-- "Cancel the email scheduled for October 10 at 4 PM" means type "cancel", scheduledDate should be "2026-10-10" and scheduledTime should be "16:00".
-- "Cancel the mail to gsingamp@gmail.com tomorrow at 9 AM" means type "cancel", scheduledDate should be tomorrow's date, scheduledTime should be "09:00", and cancelTo should contain "gsingamp@gmail.com".
+- "Cancel the mail that needs to be sent tomorrow 9 AM"
+  → type: "cancel"
+  → scheduledDate: tomorrow's date
+  → scheduledTime: "09:00"
+  → cancelTo: []
+
+- "Cancel the emails scheduled tomorrow"
+  → type: "cancel"
+  → scheduledDate: tomorrow's date
+  → scheduledTime: null
+  → cancelTo: []
+
+- "Cancel all emails scheduled tomorrow at 9 AM"
+  → type: "cancel"
+  → scheduledDate: tomorrow's date
+  → scheduledTime: "09:00"
+  → cancelTo: []
+
+- "Cancel the mail to gsingamp@gmail.com tomorrow"
+  → type: "cancel"
+  → scheduledDate: tomorrow's date
+  → scheduledTime: null
+  → cancelTo: ["gsingamp@gmail.com"]
+
+- "Cancel the mail to gsingamp@gmail.com tomorrow at 9 AM"
+  → type: "cancel"
+  → scheduledDate: tomorrow's date
+  → scheduledTime: "09:00"
+  → cancelTo: ["gsingamp@gmail.com"]
+
+- "Cancel all scheduled emails"
+  → type: "cancel"
+  → scheduledDate: null
+  → scheduledTime: null
+  → cancelTo: []
+
+- "Cancel the email scheduled for October 10 at 4 PM"
+  → type: "cancel"
+  → scheduledDate: "2026-10-10"
+  → scheduledTime: "16:00"
+  → cancelTo: []
+
+- "Cancel all emails scheduled for October 10"
+  → type: "cancel"
+  → scheduledDate: "2026-10-10"
+  → scheduledTime: null
+  → cancelTo: []
 
 CURRENT DRAFT:
 ${draftText}

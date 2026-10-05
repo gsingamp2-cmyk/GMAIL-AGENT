@@ -1,5 +1,103 @@
 [
   {
+    "id": "1791218148146-6ktkqr",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "sent",
+        "messageId": null
+      }
+    ],
+    "subject": "Request for Project Deadline Extension",
+    "message": "Dear Sir,\n\nI am writing to request a two-day extension for the upcoming project deadline to ensure I can complete all requirements thoroughly.\n\nBest regards,\nGovardhan\nComputer Science and Business Systems",
+    "status": "sent",
+    "sentAt": "2026-10-05T16:35:48.146Z"
+  },
+  {
+    "id": "1791217897302-4ycs9x",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "sent",
+        "messageId": null
+      }
+    ],
+    "subject": "Test Email",
+    "message": "This is a test email.\n\nBest regards,\nGovardhan",
+    "status": "sent",
+    "sentAt": "2026-10-05T16:31:37.302Z"
+  },
+  {
+    "id": "1791217510505-aus97i",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "failed",
+        "error": "invalid_grant"
+      }
+    ],
+    "subject": "Thank You for Allowing Me to Write the Exam",
+    "message": "Dear Professor,\n\nThank you very much for your understanding and for allowing me to write the exam without my hall ticket. I truly appreciate your assistance and flexibility.\n\nBest regards,\nGovardhan",
+    "status": "failed",
+    "sentAt": "2026-10-05T16:25:10.505Z"
+  },
+  {
+    "id": "1791217503171-00zfss",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "failed",
+        "error": "invalid_grant"
+      }
+    ],
+    "subject": "Thank You for Allowing Me to Write the Exam",
+    "message": "Dear Professor,\n\nThank you very much for your understanding and for allowing me to write the exam without my hall ticket. I truly appreciate your assistance and flexibility.\n\nBest regards,\nGovardhan",
+    "status": "failed",
+    "sentAt": "2026-10-05T16:25:03.171Z"
+  },
+  {
+    "id": "1791217480372-govvda",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "failed",
+        "error": "invalid_grant"
+      }
+    ],
+    "subject": "Thank You for Allowing Me to Write the Exam",
+    "message": "Dear Professor,\n\nThank you very much for your understanding and for allowing me to write the exam without my hall ticket. I truly appreciate your assistance and flexibility.\n\nBest regards,\nGovardhan",
+    "status": "failed",
+    "sentAt": "2026-10-05T16:24:40.372Z"
+  },
+  {
+    "id": "1791217415722-6h52rf",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "failed",
+        "error": "invalid_grant"
+      }
+    ],
+    "subject": "Emergency Leave Application - Tomorrow",
+    "message": "Dear Professor,\n\nI am writing to inform you that I will not be able to attend classes tomorrow due to an emergency. Kindly grant me leave for the day.\n\nBest regards,\nGovardhan\nComputer Science and Business Systems",
+    "status": "failed",
+    "sentAt": "2026-10-05T16:23:35.722Z"
+  },
+  {
+    "id": "1791217409939-v6b4p6",
+    "recipients": [
+      {
+        "email": "gsingamp@gmail.com",
+        "status": "failed",
+        "error": "invalid_grant"
+      }
+    ],
+    "subject": "Emergency Leave Application - Tomorrow",
+    "message": "Dear Professor,\n\nI am writing to inform you that I will not be able to attend classes tomorrow due to an emergency. Kindly grant me leave for the day.\n\nBest regards,\nGovardhan\nComputer Science and Business Systems",
+    "status": "failed",
+    "sentAt": "2026-10-05T16:23:29.940Z"
+  },
+  {
     "id": "1791048703276-yyv81w",
     "recipients": [
       {

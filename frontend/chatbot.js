@@ -21,6 +21,7 @@ let currentChatId=null;
 let conversation=[];
 let currentDraft=null;
 let currentScheduledAt=null;
+let pendingCancellation=null;
 
 function createChatId(){
     return Date.now().toString()+"-"+Math.random().toString(36).substring(2,8);
@@ -79,6 +80,7 @@ function createNewChat(){
     conversation=[];
     currentDraft=null;
     currentScheduledAt=null;
+    pendingCancellation=null;
 
     saveAllConversations();
     clearChatScreen();
@@ -139,6 +141,7 @@ function openChat(chatId){
     conversation=chat.messages||[];
     currentDraft=chat.draft||null;
     currentScheduledAt=chat.scheduledAt||null;
+    pendingCancellation=null;
 
     messagesElement.innerHTML="";
 
@@ -160,6 +163,7 @@ function clearChatScreen(){
     addMessage("Hi! 👋 Tell me what email you want to send and I'll prepare the draft for you.","bot");
     updateDraft(null,false);
     currentScheduledAt=null;
+    pendingCancellation=null;
     updateScheduleUI();
 }
 
@@ -301,7 +305,7 @@ function getCurrentDraft(){
     };
 }
 
-async function cancelScheduledMail(scheduledAt,cancelTo=[]){
+async function findScheduledMails(scheduledDate=null,scheduledTime=null,cancelTo=[]){
     const response=await fetch(`${API_URL}/mail/scheduled`);
     const data=await response.json();
 
@@ -309,13 +313,30 @@ async function cancelScheduledMail(scheduledAt,cancelTo=[]){
         throw new Error(data.error||"Could not load scheduled emails.");
     }
 
-    const targetTime=new Date(scheduledAt).getTime();
+    let matches=data.scheduledMails;
 
-    let matches=data.scheduledMails.filter(mail=>{
-        return Math.abs(
-            new Date(mail.scheduledAt).getTime()-targetTime
-        )<1000;
-    });
+    if(scheduledDate){
+        matches=matches.filter(mail=>{
+            const date=new Date(mail.scheduledAt).toLocaleDateString("en-CA",{
+                timeZone:"Asia/Kolkata"
+            });
+
+            return date===scheduledDate;
+        });
+    }
+
+    if(scheduledTime){
+        matches=matches.filter(mail=>{
+            const time=new Date(mail.scheduledAt).toLocaleTimeString("en-GB",{
+                timeZone:"Asia/Kolkata",
+                hour:"2-digit",
+                minute:"2-digit",
+                hour12:false
+            });
+
+            return time===scheduledTime;
+        });
+    }
 
     if(cancelTo.length>0){
         matches=matches.filter(mail=>{
@@ -327,30 +348,203 @@ async function cancelScheduledMail(scheduledAt,cancelTo=[]){
         });
     }
 
-    if(matches.length===0){
-        throw new Error("I could not find a matching scheduled email.");
-    }
+    return matches;
+}
 
-    if(matches.length>1){
-        throw new Error("Multiple scheduled emails match that date and time.");
-    }
+async function deleteScheduledMails(mails){
+    const cancelled=[];
 
-    const mail=matches[0];
+    for(const mail of mails){
+        const response=await fetch(
+            `${API_URL}/mail/scheduled/${mail.id}`,
+            {
+                method:"DELETE"
+            }
+        );
 
-    const deleteResponse=await fetch(
-        `${API_URL}/mail/scheduled/${mail.id}`,
-        {
-            method:"DELETE"
+        const data=await response.json();
+
+        if(!response.ok||!data.success){
+            throw new Error(
+                data.error||`Could not cancel scheduled email ${mail.id}.`
+            );
         }
+
+        cancelled.push(mail);
+    }
+
+    return cancelled;
+}
+
+function formatCancellationDate(date){
+    if(!date)return "the selected date";
+
+    return new Date(`${date}T00:00:00`).toLocaleDateString("en-IN",{
+        day:"numeric",
+        month:"long",
+        year:"numeric"
+    });
+}
+
+function formatCancellationTime(time){
+    if(!time)return "";
+
+    const [hour,minute]=time.split(":").map(Number);
+    const date=new Date();
+
+    date.setHours(hour,minute,0,0);
+
+    return date.toLocaleTimeString("en-IN",{
+        hour:"numeric",
+        minute:"2-digit"
+    });
+}
+
+async function handleCancellationRequest(data){
+    const scheduledDate=data.scheduledDate||null;
+    const scheduledTime=data.scheduledTime||null;
+    const cancelTo=data.cancelTo||[];
+
+    const matches=await findScheduledMails(
+        scheduledDate,
+        scheduledTime,
+        cancelTo
     );
 
-    const deleteData=await deleteResponse.json();
+    if(matches.length===0){
+        const errorMessage="I couldn't find any scheduled emails matching your request.";
 
-    if(!deleteResponse.ok||!deleteData.success){
-        throw new Error(deleteData.error||"Could not cancel the scheduled email.");
+        addMessage(errorMessage,"bot");
+
+        conversation.push({
+            role:"assistant",
+            content:errorMessage
+        });
+
+        saveCurrentChat();
+
+        return;
     }
 
-    return mail;
+    pendingCancellation={
+        mails:matches,
+        scheduledDate,
+        scheduledTime,
+        cancelTo
+    };
+
+    let message=`I found ${matches.length} scheduled email${matches.length===1?"":"s"} matching your request.\n\n`;
+
+    matches.forEach((mail,index)=>{
+        const date=new Date(mail.scheduledAt).toLocaleString("en-IN",{
+            timeZone:"Asia/Kolkata",
+            day:"numeric",
+            month:"short",
+            hour:"numeric",
+            minute:"2-digit"
+        });
+
+        message+=`${index+1}. ${date} — ${mail.to.join(", ")} — ${mail.subject}\n`;
+    });
+
+    message+="\nDo you want me to cancel all of them?";
+
+    addMessage(message,"bot");
+
+    conversation.push({
+        role:"assistant",
+        content:message
+    });
+
+    saveCurrentChat();
+}
+
+async function handleCancellationConfirmation(text){
+    const answer=text.trim().toLowerCase();
+
+    const yesAnswers=[
+        "yes",
+        "yes please",
+        "yeah",
+        "yep",
+        "yup",
+        "sure",
+        "do it",
+        "go ahead",
+        "cancel them",
+        "cancel all",
+        "confirm",
+        "ok",
+        "okay"
+    ];
+
+    const noAnswers=[
+        "no",
+        "no thanks",
+        "nope",
+        "don't",
+        "do not",
+        "cancel",
+        "stop",
+        "leave them",
+        "keep them"
+    ];
+
+    if(yesAnswers.includes(answer)){
+        const mails=pendingCancellation.mails;
+
+        try{
+            const cancelled=await deleteScheduledMails(mails);
+
+            const message=cancelled.length===1
+                ?"I have cancelled the scheduled email. ✅"
+                :`I have cancelled ${cancelled.length} scheduled emails. ✅`;
+
+            addMessage(message,"bot");
+
+            conversation.push({
+                role:"assistant",
+                content:message
+            });
+
+            pendingCancellation=null;
+            saveCurrentChat();
+        }catch(error){
+            console.error("Cancellation error:",error);
+
+            const message=`I couldn't cancel the scheduled emails: ${error.message}`;
+
+            addMessage(message,"bot");
+
+            conversation.push({
+                role:"assistant",
+                content:message
+            });
+
+            pendingCancellation=null;
+            saveCurrentChat();
+        }
+
+        return true;
+    }
+
+    if(noAnswers.includes(answer)){
+        const message="Okay, I won't cancel them. Nothing was deleted.";
+
+        addMessage(message,"bot");
+
+        conversation.push({
+            role:"assistant",
+            content:message
+        });
+
+        pendingCancellation=null;
+        saveCurrentChat();
+
+        return true;
+    }
+
+    return false;
 }
 
 async function sendMessage(){
@@ -370,6 +564,35 @@ async function sendMessage(){
     saveCurrentChat();
 
     input.value="";
+
+    if(pendingCancellation){
+        setLoading(true);
+
+        try{
+            const handled=await handleCancellationConfirmation(text);
+
+            if(handled){
+                return;
+            }
+
+            const message="Please reply with Yes to cancel the listed emails or No to keep them.";
+
+            addMessage(message,"bot");
+
+            conversation.push({
+                role:"assistant",
+                content:message
+            });
+
+            saveCurrentChat();
+        }finally{
+            setLoading(false);
+            input.focus();
+        }
+
+        return;
+    }
+
     setLoading(true);
 
     try{
@@ -396,37 +619,7 @@ async function sendMessage(){
         });
 
         if(data.type==="cancel"){
-            try{
-                const cancelledMail=await cancelScheduledMail(
-                    data.scheduledAt,
-                    data.cancelTo||[]
-                );
-
-                const cancelMessage=`I have cancelled the scheduled email to ${cancelledMail.to.join(", ")}.`;
-
-                addMessage(cancelMessage,"bot");
-
-                conversation.push({
-                    role:"assistant",
-                    content:cancelMessage
-                });
-
-                saveCurrentChat();
-            }catch(error){
-                console.error("Cancellation error:",error);
-
-                const errorMessage=`I couldn't cancel the scheduled email: ${error.message}`;
-
-                addMessage(errorMessage,"bot");
-
-                conversation.push({
-                    role:"assistant",
-                    content:errorMessage
-                });
-
-                saveCurrentChat();
-            }
-
+            await handleCancellationRequest(data);
             return;
         }
 
