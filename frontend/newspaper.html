@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My-Agent Daily | Your Email Newspaper</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="newspaper.css">
+    <link rel="stylesheet" href="./components/navbar.css">
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <main class="newspaper">
+        <header class="newspaper-header">
+            <div class="edition-label">YOUR PERSONAL EMAIL EDITION</div>
+            <h1>MY-AGENT <span>DAILY</span></h1>
+            <div class="edition-meta">
+                <span id="editionDate">YOUR DAILY BRIEFING</span>
+                <span>POWERED BY AI</span>
+            </div>
+        </header>
+
+        <section class="newspaper-intro">
+            <div>
+                <span class="section-label">THE INBOX EDITION</span>
+                <h2>Your world, <em>in the headlines.</em></h2>
+                <p>Your emails, organized into one readable daily edition.</p>
+            </div>
+            <button id="refreshButton" class="refresh-button" onclick="loadInbox()">
+                ↻ Refresh Inbox
+            </button>
+        </section>
+
+        <section class="newspaper-stats">
+            <div class="stat-card">
+                <span>TOTAL EMAILS</span>
+                <strong id="totalEmails">—</strong>
+            </div>
+            <div class="stat-card">
+                <span>UNREAD</span>
+                <strong id="unreadEmails">—</strong>
+            </div>
+            <div class="stat-card">
+                <span>YOUR EDITION</span>
+                <strong>DAILY</strong>
+            </div>
+        </section>
+
+        <section class="inbox-section">
+            <div class="section-heading">
+                <div>
+                    <span class="section-label">LATEST STORIES</span>
+                    <h2>From your inbox</h2>
+                </div>
+                <span id="emailCount" class="email-count">Loading emails...</span>
+            </div>
+
+            <div id="inboxStatus" class="inbox-status">
+                Connecting to your Gmail inbox...
+            </div>
+
+            <div id="emailGrid" class="email-grid"></div>
+
+            <div class="pagination">
+                <button id="loadMoreButton" onclick="loadMoreEmails()" hidden>
+                    Load More Emails ↓
+                </button>
+            </div>
+        </section>
+
+        <footer class="newspaper-footer">
+            <strong>MY-AGENT DAILY</strong>
+            <span>Your inbox. A clearer perspective.</span>
+        </footer>
+    </main>
+
+    <script src="newspaper.js"></script>
+    <script src="./components/navbar.js"></script>
+</body>
+</html>
