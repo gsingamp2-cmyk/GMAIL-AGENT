@@ -19,3 +19,5 @@ npm-debug.log*
 
 # Gmail OAuth token
 gmail-token.json
+
+services/mail-service/data/read-emails.json
