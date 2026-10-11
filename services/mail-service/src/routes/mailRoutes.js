@@ -2,7 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 
-const { sendEmail } = require("../services/gmailService");
+const { sendEmail, getInboxEmails, getEmailById } = require("../services/gmailService");
 const {
   createScheduledMail,
   getScheduledMails,
@@ -23,6 +23,90 @@ function readHistory() {
     return [];
   }
 }
+
+const READ_EMAILS_PATH = path.resolve(__dirname, "../../data/read-emails.json");
+
+function readViewedEmails() {
+  if (!fs.existsSync(READ_EMAILS_PATH)) return [];
+
+  try {
+    return JSON.parse(fs.readFileSync(READ_EMAILS_PATH, "utf8"));
+  } catch (error) {
+    console.error("Could not read viewed emails:", error);
+    return [];
+  }
+}
+
+function saveViewedEmails(emails) {
+  fs.writeFileSync(READ_EMAILS_PATH, JSON.stringify(emails, null, 2));
+}
+
+router.post("/inbox/:id/read", async (req, res) => {
+  try {
+    const email = await getEmailById(req.params.id);
+    const viewedEmails = readViewedEmails();
+
+    const existingIndex = viewedEmails.findIndex(
+      item => item.id === email.id
+    );
+
+    const record = {
+      id: email.id,
+      threadId: email.threadId,
+      from: email.from,
+      to: email.to,
+      subject: email.subject,
+      date: email.date,
+      viewedAt: new Date().toISOString()
+    };
+
+    if (existingIndex !== -1) {
+      viewedEmails[existingIndex] = record;
+    } else {
+      viewedEmails.unshift(record);
+    }
+
+    saveViewedEmails(viewedEmails);
+
+    res.json({
+      success: true,
+      message: "Email marked as read.",
+      email: record
+    });
+  } catch (error) {
+    console.error("Mark email as read error:", error.message);
+
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+/*
+==================================================
+GET VIEWED EMAILS
+GET /mail/read-emails
+==================================================
+*/
+router.get("/read-emails", (req, res) => {
+  try {
+    const viewedEmails = readViewedEmails();
+
+    res.json({
+      success: true,
+      count: viewedEmails.length,
+      emails: viewedEmails
+    });
+  } catch (error) {
+    console.error("Viewed emails retrieval error:", error.message);
+
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
 
 function saveHistory(history) {
   fs.writeFileSync(HISTORY_PATH, JSON.stringify(history, null, 2));
@@ -315,6 +399,63 @@ router.delete("/scheduled/:id", (req, res) => {
     });
   }
 });
+
+/*
+==================================================
+GET GMAIL INBOX
+GET /mail/inbox
+==================================================
+*/
+router.get("/inbox", async (req, res) => {
+  try {
+    const maxResults = Math.min(Math.max(parseInt(req.query.maxResults, 10) || 20, 1), 100);
+    const pageToken = req.query.pageToken || null;
+
+    const result = await getInboxEmails(maxResults, pageToken);
+
+    res.json({
+      success: true,
+      count: result.emails.length,
+      emails: result.emails,
+      nextPageToken: result.nextPageToken,
+      resultSizeEstimate: result.resultSizeEstimate
+    });
+  } catch (error) {
+    console.error("Inbox retrieval error:", error.message);
+
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+/*
+==================================================
+GET COMPLETE EMAIL
+GET /mail/inbox/:id
+==================================================
+*/
+router.get("/inbox/:id", async (req, res) => {
+  try {
+    const email = await getEmailById(req.params.id);
+
+    res.json({
+      success: true,
+      email
+    });
+  } catch (error) {
+    console.error("Email retrieval error:", error.message);
+
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+
+
 
 
 module.exports = router;
